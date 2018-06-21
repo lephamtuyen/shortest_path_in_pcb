@@ -1,0 +1,197 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!-- saved from url=(0059)http://web.informatik.uni-bonn.de/I/GeomLab/ShortestPathLP/ -->
+<html class="gr__web_informatik_uni-bonn_de"><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Geometry Lab: Calculating the shortest path in a simple polygon</title>
+<meta name="Keywords" content="Shortest Paths Simple Polygon Lee Preparata Funnel">
+<link rel="stylesheet" type="text/css" href="./Geometry Lab_ Calculating the shortest path in a simple polygon_files/geomlab.css">
+<style type="text/css"></style></head>
+<body bgcolor="#ffffff" text="#000000" link="#0060ae" vlink="#0060ae" alink="blue">
+<div class="pagehead">
+<p>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" summary="">
+<tbody><tr>
+<td align="left" valign="bottom" rowspan="2" width="178"><a href="http://www.geometrylab.de/"><img alt="Geometry Lab" src="./Geometry Lab_ Calculating the shortest path in a simple polygon_files/GeomLab.gif"></a></td>
+<td align="right"><nobr>[<a class="foot" href="http://web.informatik.uni-bonn.de/I/GeomLab/ShortestPathLP/index.html.en">English</a>]&nbsp;[<a class="foot" href="http://web.informatik.uni-bonn.de/I/GeomLab/sitemap.html">Sitemap</a>]&nbsp;[<a class="foot" href="http://web.informatik.uni-bonn.de/I/GeomLab/about.html">Über geometrylab.de</a>]</nobr><nobr>
+</nobr></td>
+</tr>
+<tr><td valign="bottom" align="left" class="breadcrumb" border="0">
+<table summary=""><tbody><tr><td>
+<a href="http://web.informatik.uni-bonn.de/I/GeomLab/index.html" class="crumb">Startseite</a> <span class="crumbline">&gt;</span>
+<a href="http://web.informatik.uni-bonn.de/I/GeomLab/ShortestPathLP/RobotMotion.html" class="crumb">Roboter-Bewegungsplanung</a> <span class="crumbline">&gt;</span>
+<a href="http://web.informatik.uni-bonn.de/I/GeomLab/ShortestPathLP/RobotPoly.html" class="crumb">Polygone</a> <span class="crumbline">&gt;</span>
+ <span class="here">Calculating the shortest path in a simple polygon</span>
+</td></tr>
+</tbody></table>
+</td>
+</tr>
+<tr>
+</tr>
+</tbody></table>
+</p>
+</div>
+<h2>
+Calculating the shortest path in a simple polygon - the Funnel Algorithm
+</h2>
+<p>
+<applet code="appsSwingGui.ShortestPathLP.ShortestPathLPApplet" archive="classes.zip" align="BOTTOM" width="200" height="30"></applet>
+</p>
+<p>
+(Please click on the button above to start the applet.)</p><p></p>
+<hr>
+<h3><u>Calculating the shortest path in a simple polygon</u></h3>
+<p>Given a closed polygon the shortest path inside that polygon from
+a <b>start</b> point to a <b>target</b> shall be constructed. Those
+two points must of course be inside the polygon, too. This path only
+consists of segments between start, target and some vertexes of the
+outline of polygon. How can these points be connected in the shortest
+way with no polygon edges intersecting?</p>
+<p>There exist some algorithms to solve this problem - this applet
+represents the algorithm invented by <a href="http://web.informatik.uni-bonn.de/I/GeomLab/ShortestPathLP/#literature">D.T. Lee
+and F.P. Preparata in 1984</a>.</p>
+<p><br>Please click on „<i>Start the algorithm!</i>“
+above to start the applet!</p>
+<p>In the lower part of this page one can get a <a href="http://web.informatik.uni-bonn.de/I/GeomLab/ShortestPathLP/#The applet">description</a>
+of the applet.</p>
+<h3>The algorithm</h3>
+<p>The tasks of the algorithm:</p>
+<ol>
+	<li><p>Compute the <i>triangulation</i>
+	of the given simple polygon. (using the <a href="http://web.informatik.uni-bonn.de/I/GeomLab/ShortestPathLP/#seidel"><i>Seidel
+	triangulation</i></a>: runtime: ~O(<i>n</i>))</p>
+	</li><li><p>Compute the <i>dual graph</i> of
+	that triangulation. (runtime: O(<i>n</i>))</p>
+	</li><li><p>Compute the <i><b>D</b>epth<b>F</b>irst<b>S</b>earch</i>
+	on that dual graph starting at the start point. (Only the part from
+	start to the target point is needed.)</p>
+	<p>(runtime: O(<i>n</i>))</p>
+	</li><li><p>Iteratively add the diagonals that are crossed by the DFS and
+	calculate the <a href="http://web.informatik.uni-bonn.de/I/GeomLab/ShortestPathLP/#Funnels">funnels</a> that represent
+	the shortest path from start to the end points of the now examined
+	diagonal. (runtime: O(<i>n</i>))</p>
+</li></ol>
+<p><a name="seidel"></a>Runtime specifications refer to the size <i>n</i>
+of the point set.
+</p>
+<h4>Seidel-Triangulation</h4>
+<p>Runtime: ~<i>O</i>(<i>n</i>)</p>
+<p>An algorithm that computes the triangulation of a polygon quite
+fast is the Seidel-Triangulation. It has a runtime of <i>O</i>(<i>n
+log* n</i>), which is almost linear. More information can be found
+in: <i>Raimund Seidel: A Simple and Fast Incremental Randomized
+Algorithm for Computing Trapezoidal Decompositions and for
+Triangulating Polygons.</i></p>
+<h4><a name="Funnels"></a>Funnels</h4>
+<p>Runtime: <i>O</i>(<i>n</i>)</p>
+<p>The shortest path from <b>start</b> to <b>target</b> can be
+computed in <i>linear runtime</i> by initiating the funnel exploration at <b>start </b>and then
+iterativly (in <i>DFS order</i>) adding diagonals until finally adding
+the <b>target</b>. Only the shortest paths from
+the temporary start (the <i>root</i>) of the funnel to the top of the
+funnel, which is always represented by the currently added <i>diagonal</i> have to be inspected.
+Those shortest paths are framed by the walls of the funnel: every
+shortest path to any point on the current diagonal lies inside the
+funnel.
+</p>
+<p>When the first diagonal that is visited by the DFS is added, the
+left end point is added to the left funnel wall(from the perspective
+of start) and the right one to the right funnel wall . So the first
+funnel always is a triangle unless start lies on the first diagonal.
+When a new diagonal is inserted, there is actually only one new point
+added to the funnel (an end point of that diagonal) as the other
+point corresponds to one of the end points of the previous diagonal:
+<i>two subsequent diagonals always have one end point in common</i>.
+When that new point has to be added to the left funnel wall, the left
+funnel wall has to be examined first (for a point that has to be
+added to the right funnel wall this corresponds): the funnel is
+scanned from the top (the previous diagonal) to the current root to
+find a tangent from the added point to the funnel wall. Those points
+that have been unsuccessfully visited will be deleted. So every point
+will be visited only once (this leads to the runtime: O(<i>n</i>)).
+<br>If the root of the current funnel has already been examined and
+neither a tangent nor a direct connection to the root has been found,
+the search continues at the other funnel wall now going from root to
+the other end point of the current diagonal. First the root and then
+all following points are added to the shortest path from start to
+target until a tangent is found. Such a tangent will usually be found
+as the funnel walls are <i>convex chains</i>. The point, where the
+tangent lies is the new root of the funnel. If none is found and the
+other end point of the diagonal is reached, the funnel consists only
+of that diagonal and the „<i>old</i>“ diagonal end point
+is the new root. In that case a concave polygon edge needs to be
+by-passed by the shortest path. <br>At the end, <b>target</b> is
+added to the left funnel wall and a last funnel exploration takes
+place. The complete shortest path now consists first of the temporary
+shortest path and second of the final left funnel wall.</p>
+<h3><a name="The applet"></a>The applet</h3>
+<p>The start button above opens a separate frame containing the
+actual application.</p>
+<p>In this new window please first draw a simple polygon on the white
+drawing area. Redundant points, i.e. points that lie on an edge and like this are unnecessary, will be deleted. The three <i>zoom</i> buttons above can be used to zoom
+view in or out. A click on <b>Fit</b> fits the polygon size perfectly
+to the window size.</p>
+<p>Once the polygon is closed the applet can show the <b>triangulation
+</b>(in yellow dotted lines) and the <b>dual graph </b>(coloured
+blue). Just click on the corresponding Checkboxes in
+the lower part of the window.<br>Please note, that whenever you insert a point on a polygon edge, the applet will not refresh until you move that new redundant point.</p>
+<p>To insert the <b>start</b> or the <b>target</b> point, right-click
+inside the polygon and select the corresponding menu item in the
+popup menu. Start will be coloured dark green and target will be red.
+The <i>diagonals</i> of the Seidel triangulation that need to be
+crossed by the shortest path from <b>start </b>to <b>target</b> will
+be visible immediately as yellow dashed lines.</p>
+<img src="./Geometry Lab_ Calculating the shortest path in a simple polygon_files/Diagonals.JPG" alt="diagonals" height="355" width="677" border="1">
+<p>Next to the two Checkboxes for the triangulation and the dual
+graph, there are three Radio buttons which allow you to select the
+way in which the construction of the shortest path should be shown.
+You can see the shortest path (always in green) at once by clicking
+on <b>Path</b>.</p>
+<img src="./Geometry Lab_ Calculating the shortest path in a simple polygon_files/ShortestPathLP.JPG" alt="shortest path" height="355" width="677" border="1">
+<p>If you want to see an automated funnel exploration, click on <b>Run.</b>
+The funnels pop up in red outlined in white – or if the funnel
+corresponds to a diagonal, it will be only a white segment. This kind
+of exploration will look quite similar to the picture below, but it
+will develop automatically (please do not interrupt the automated
+development by clicking anywhere while it runs, this might lead to
+multiple automated runs).</p>
+<img src="./Geometry Lab_ Calculating the shortest path in a simple polygon_files/FunnelRun.JPG" alt="run" height="355" width="677" border="1">
+<p>By default <b>Steps</b> is selected. Whenever you click on <b>Next</b>,
+the current funnel will become an old funnel in dark red and the next
+funnel will popup in bright red. But before that, you will see
+blue segments popup, if the old funnel consists of more than a
+diagonal and if the new diagonal not only extends one of the old
+funnel walls, because it keeps the convex chain convex. Those are the
+segments, that are checked for being <i>tangents</i> to the funnel
+walls.
+</p>
+<img src="./Geometry Lab_ Calculating the shortest path in a simple polygon_files/StepByStepTangents.JPG" alt="tangents" height="355" width="677" border="1">
+<img src="./Geometry Lab_ Calculating the shortest path in a simple polygon_files/StepByStep.JPG" alt="steps" height="355" width="677" border="1">
+<p>If a funnel corresponds to one of the diagonals, that diagonal
+will be overpainted in white, if it is the current funnel or in red,
+if its a previous funnel.</p>
+<img src="./Geometry Lab_ Calculating the shortest path in a simple polygon_files/StepByStepDiagonal.JPG" alt="steps-diagonal" height="355" width="677" border="1">
+<p>The previous funnel will become visible in dark red outlined in
+red, when you click on <b>Previous</b>.</p>
+<img src="./Geometry Lab_ Calculating the shortest path in a simple polygon_files/StepByStepBack.JPG" alt="backspace" height="355" width="677" border="1">
+<p>If a previous funnel (in the <b>Steps</b> case) is overlapped by
+the actual funnel, please note, that the <i>top</i> of the previous
+funnel always corresponds to the previously entered diagonal and that
+side of the old funnel, that stays invisible corresponds to the part
+of the current funnel up to the previously inserted diagonal.</p>
+<h3>Reference:</h3>
+<ul>
+	<li><p><a name="literature"></a>D. T. Lee
+	and F. P. Preparata: Euclidean shortest paths in the presence of
+	rectilinear barriers. Networks, 14:393-410, 1984.</p>
+</li></ul>
+<hr noshade="" width="100%">
+<p>&nbsp;</p>
+<div class="pagefoot">
+© Universität Bonn,
+<a target="_top" href="http://web.informatik.uni-bonn.de/I/agklein.html">Informatik&nbsp;Abt.&nbsp;I</a>
+- <a href="mailto:INSERT_VALID_EMAIL_ADRESS"><img style="vertical-align:-3px" src="./Geometry Lab_ Calculating the shortest path in a simple polygon_files/webmaster.gif" alt=""></a>
+- Letzte Änderung
+25-03-2008 11:28<br>
+</div>
+
+
+</body><span class="gr__tooltip"><span class="gr__tooltip-content"></span><i class="gr__tooltip-logo"></i><span class="gr__triangle"></span></span></html>

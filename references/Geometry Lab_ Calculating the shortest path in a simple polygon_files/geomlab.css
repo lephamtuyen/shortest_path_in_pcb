@@ -1,0 +1,134 @@
+.subtitle {
+ text-align: center;
+ vertical-align: top;
+}
+
+.imgcell {
+	text-align: center;
+}
+
+.pagefoot {
+ font-weight: bold;
+ font-size: smaller;
+ vertical-align: center;
+}
+
+.breadcrumb {
+	background-color: #FFF1BF;
+	padding-left: 5pt;
+}
+
+.crumbline {
+	/*color:#0060AE;*/
+	/*font-size:smaller;*/
+	font-weight: normal;
+}
+
+.silver {
+background-color: silver;
+}
+
+body {
+	font-family:Helvetica,Arial,Geneva,sans-serif;
+	margin: 0 auto;
+	max-width:1024px;
+}
+
+a {
+	color:#0060AE;
+	text-decoration:none;
+}
+
+a.foot {
+	color:#0060AE;
+	text-decoration:none;
+	font-size:smaller;
+}
+
+a.crumb {
+	color:#0060AE;
+	text-decoration:none;
+	font-size:smaller;
+	font-weight: bold;
+}
+
+td a {
+	color:#0060AE;
+	font-weight: bold;
+	text-decoration:none;
+}
+
+span.here {
+	font-weight:bold;
+	font-size:smaller;
+}
+
+img { 
+	border:0;
+}
+
+table.applets { 
+  	border-spacing:10px;
+	empty-cells:show;
+	border-width:2px;
+	border-color:gray;
+	border-style:outset;
+	padding:5px;
+}
+
+@media print {
+  th.big { 
+	color:#0060AE; font-size:x-large; 
+	text-align:center; background-color:silver;
+	}
+}
+@media screen{
+  th.big { 
+	background-color:#0060AE; font-size:x-large; color:white; 
+	text-align:center;
+	}
+}
+
+th.small { 
+	color:#0060AE; font-size:larger; 
+	text-align:center; background-color:silver;
+	}
+
+.sitemapheadline {
+	color:#0060AE;
+	font-weight:bold;
+	font-size:larger;
+	text-decoration:underline;
+}
+
+.sitemapapplet {
+	font-weight:normal;
+}
+
+.sitemapappletadd {
+	font-size:smaller;
+}
+
+.sitemaplist {
+	list-style-type:none;
+}
+
+.bibliography {
+    margin-left:1em;   
+}
+
+.bibliography td {
+    vertical-align:top;
+}
+
+.bibliography td a {
+    font-weight:normal;
+}
+
+.adapted td {
+    vertical-align:top;
+}
+
+.adapted td a {
+    font-weight:normal;
+}
